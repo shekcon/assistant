@@ -324,20 +324,20 @@
       final_span.innerHTML = linebreak(final_transcript);
       // interim_span.innerHTML = linebreak(interim_transcript);
       if (final_transcript) {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open(
+        var http = new XMLHttpRequest();
+        http.open(
           "POST",
           "https://lequangsang.herokuapp.com/ifttt/event",
           false
         ); // false for synchronous request
-        xhr.setRequestHeader("Content-Type", "application/json");
+        http.setRequestHeader("Content-Type", "application/json");
+
+        console.log(final_transcript);
 
         if (
-          final_transcript.includes("turn") &&
-          final_transcript.includes("on") &&
-          final_transcript.includes("one")
+          final_transcript.toLowerCase().includes("turn on light number one")
         ) {
-          xmlHttp.send(
+          http.send(
             JSON.stringify({
               event: "server-send-lamp1-on",
               action: 0,
@@ -345,11 +345,9 @@
             })
           );
         } else if (
-          final_transcript.includes("turn") &&
-          final_transcript.includes("off") &&
-          final_transcript.includes("one")
+          final_transcript.toLowerCase().includes("turn off light number one")
         ) {
-          xmlHttp.send(
+          http.send(
             JSON.stringify({
               event: "server-send-lamp1-off",
               action: 0,
